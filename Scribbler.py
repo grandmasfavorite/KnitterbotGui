@@ -56,9 +56,19 @@ def draw_brush(widget, x, y):
                           rect[0], rect[1], rect[2], rect[3])
     widget.queue_draw_area(rect[0], rect[1], rect[2], rect[3])
 
+def undraw_brush(widget, x, y):
+    x = x//10 * 10 + 5;
+    y = y//10 * 10 + 5;
+    rect = (int(x-5), int(y-5), 10, 10)
+    pixmap.draw_rectangle(widget.get_style().white_gc, True,
+                          rect[0], rect[1], rect[2], rect[3])
+    widget.queue_draw_area(rect[0], rect[1], rect[2], rect[3])
+
 def button_press_event(widget, event):
     if event.button == 1 and pixmap != None:
         draw_brush(widget, event.x, event.y)
+    elif event.button == 3 and pixmap != None:
+        undraw_brush(widget, event.x, event.y)
     return True
 
 def motion_notify_event(widget, event):
