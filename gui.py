@@ -1,3 +1,7 @@
+import serial
+import time
+ser = serial.Serial("/dev/ttyACM1", 9600) #Connecting to Serial Port
+
 import pygtk
 pygtk.require("2.0")
 import gtk
@@ -10,15 +14,17 @@ class Base:
 			self.lengthEntry.set_text("INVALID")
 			length =  None
 		width = int(self.widthEntry.get_text())
-		if width < 10:
+		if width < 5:
 			self.widthEntry.set_text("INVALID")
 			width = None
-		elif width > 50:
+		elif width > 42:
 			self.widthEntry.set_text("INVALID")
 			width = None
 
 		#Doing Stuff
 		if width and length:
+			ser.write("wid="+str(width)+";")
+			ser.write("len="+str(length)+";")
 			print "width: %s" % width
 			print "length: %s" % length
 			self.window.destroy()
